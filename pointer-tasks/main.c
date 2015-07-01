@@ -21,7 +21,7 @@ typedef struct PathSegment {
 } PathSegment;
 
 typedef struct Player {
-    char *name[];
+    char *name;
     int health;
     int wealth;
     int distance_travelled;
@@ -57,8 +57,8 @@ PathSegment *GenerateAdventure() {
 
     PathSegment *leftBranchCursor = home; // primary
     PathSegment *rightBranchCursor = NULL;
-
-    for (int i = 0; i < 100; i++) {
+    int i;
+    for ( i = 0; i < 100; i++) {
 
         if (leftBranchCursor != NULL) {
             // append to left branch
@@ -131,7 +131,7 @@ void PrintPath(PathSegment *pathStart) {
 void Printu(char message[], int parameter, Player *player)
 {
     printf("%s: ", player->name);
-    printf("%s", message)
+    printf("%s", message);
 
 }
 void FreePathHelper(PathSegment *segment);
@@ -161,7 +161,7 @@ void PlayerOptions(Player *player)
     if (path->mainRoad && path->sideBranch) {
         printf("You are at a crossroads!\n What decision will you make?\n");
     } else if (path->mainRoad) {
-        printf("The only way forward is straight a head.\n");
+        printf("The only way forward is straight ahead.\n");
     } else if (path->sideBranch) {
         printf("The main road is blocked. You will have to take the side road.\n");
     } else {
@@ -236,12 +236,19 @@ void PlayerMove(Player *player, Direction direction)
         printf("The given direction was not understood.\n");
     }
 }
+void GetPlayerName(char *name)
+{
+    printf("Tell me, what is your name?\n");
+    fgets(name, 35, stdin);
+}
 
 Player *constructPlayer(PathSegment *path)
 {
     Player *player = malloc(sizeof(Player));
+    char name[35];
+    GetPlayerName(name);
 
-    GetPlayerName
+    player->name = name;
 
     player->currentLocation = path;
     player->distance_travelled = 0;
