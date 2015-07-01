@@ -140,7 +140,7 @@ void PlayerOptions(Player *player)
 {
     PathSegment *path = player->currentLocation;
     if (path->mainRoad && path->sideBranch) {
-        printf("You are at a crossroads!\n What decision will you make?");
+        printf("You are at a crossroads!\n What decision will you make?\n");
     } else if (path->mainRoad) {
         printf("The only way forward is straight a head.\n");
     } else if (path->sideBranch) {
@@ -262,8 +262,10 @@ Direction parseInput(char input[])
 {
     if (ForwardPhrase(input)) {
         return Forward;
-    } else if (TurnPhrase(input) {
+    } else if (TurnPhrase(input)) {
         return Turn;
+    } else {
+        return -1;
     }
 }
 
