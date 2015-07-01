@@ -230,11 +230,41 @@ Player *constructPlayer(PathSegment *path)
     return player;
 }
 
+bool ForwardPhrase(char input[])
+{
+    if (strstr(input, "ahead")) {
+        return true;
+    } else if (strstr(input, "forward")) {
+        return true;
+    } else if (strstr(input, "straight")) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+int TurnPhrase(char input[])
+{
+    if (strstr(input, "turn")) {
+        return true;
+    } else if (strstr(input, "left")) {
+        return true;
+    } else if (strstr(input, "right")) {
+        return true;
+    } else if (strstr(input, "side")) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 Direction parseInput(char input[])
 {
     if (ForwardPhrase(input)) {
         return Forward;
-    } else if (TurnPhrase(input)
+    } else if (TurnPhrase(input) {
+        return Turn;
+    }
 }
 
 void handleResponse(char input[], Player *player)
