@@ -127,6 +127,8 @@ void PrintPath(PathSegment *pathStart) {
     }
 }
 
+void FreePathHelper(PathSegment *segment);
+
 void FreeAllPathSegments(PathSegment *segment) {
     // properly deallocate all segments along the path
     FreePathHelper(segment->mainRoad);
@@ -141,7 +143,6 @@ void FreePathHelper(PathSegment *segment) {
         FreeAllPathSegments(segment);
     }
 }
-
 void PlayerDistance(Player *player)
 {
     printf("You have managed to travel %d miles from home!\n", player->distance_travelled);
@@ -278,6 +279,7 @@ Direction parseInput(char input[])
     } else {
         return -1;
     }
+    
 }
 
 void handleResponse(char input[], Player *player)
@@ -286,6 +288,28 @@ void handleResponse(char input[], Player *player)
     
     PlayerMove(player, direction);
     
+}
+
+void printVictory()
+{
+    printf("YOU HAVE WON!!!!");
+}
+
+void printGameOver()
+{
+    printf("GAME OVER!!");
+}
+
+bool GameStatus(Player *player)
+{
+    if (player->wealth == 100) {
+        printVictory();
+        return true;
+    } else if (player->health) {
+        printGameOver();
+        return true;
+    }
+    return false;
 }
 
 int main(int argc, const char * argv[]) {
@@ -308,6 +332,10 @@ int main(int argc, const char * argv[]) {
         handleResponse(input, player);
 
         printf("input was %s\n", input);
+        
+        if (GameStatus(player)) {
+            break;
+        }
     }
     
     FreeAllPathSegments(path);
