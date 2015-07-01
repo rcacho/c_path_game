@@ -129,6 +129,17 @@ void PrintPath(PathSegment *pathStart) {
 
 void FreeAllPathSegments(PathSegment *segment) {
     // properly deallocate all segments along the path
+    FreePathHelper(segment->mainRoad);
+    FreePathHelper(segment->sideBranch);
+
+    free(segment);
+}
+
+void FreePathHelper(PathSegment *segment) {
+    if (segment != NULL)
+    {
+        FreeAllPathSegments(segment);
+    }
 }
 
 void PlayerDistance(Player *player)
