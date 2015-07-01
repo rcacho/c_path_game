@@ -128,10 +128,9 @@ void PrintPath(PathSegment *pathStart) {
     }
 }
 
-void Printu(char message[], int parameter, Player *player)
+void printu(Player *player)
 {
-    printf("%s: ", player->name);
-    printf("%s", message);
+    printf("%s ", player->name);
 
 }
 void FreePathHelper(PathSegment *segment);
@@ -180,14 +179,34 @@ void PlayerHealth(Player *player)
     if (player->health > 80) {
         printf("Your health is at %d.\n", player->health);
     } else if (player->health > 60) {
-        printf("Your health is at %d. Keep going!\n", player->health);
+        printf("Your health is at %d. Keep going %s!\n", player->health, player->name);
     } else if (player->health > 40) {
         printf("Your health is at %d! Start making more cautious decisions.\n", player->health);
+    } else if (player->health > 20) {
+        printf("Your health is at %d! Be careful %s!\n", player->name);
     } else if (player->health < 20) {
-        printf("Your current health is at %d! Be careful!\n", player->health);
+        printf("Your current health is at %d! Your outlook is grim %s!\n", player->health, player->name);
     }
 
 }
+
+void NewStatus(Player *player)
+{
+    PathSegment *location = player->currentLocation;
+    PathSegmentContents contents = location->contents;
+
+    switch (contents) {
+        case 1:
+            player->wealth = player->wealth + 5;
+            break;
+        case 2:
+            player->health = player->health - 5;
+            break;
+        default:
+            break;
+    }
+}
+
 void PlayerStatus(Player* player)
 {
     PlayerDistance(player);
@@ -204,6 +223,7 @@ void MoveForward(Player *player)
     if (path->mainRoad) {
         player->currentLocation = path->mainRoad;
         player->distance_travelled = player->distance_travelled + 1;
+        NewStatus(player);
     } else if (path->sideBranch) {
         printf("There is no path ahead. You will have to turn.\n");
     } else {
@@ -218,6 +238,7 @@ void MoveTurn(Player *player)
     if (path->sideBranch) {
         player->currentLocation = path->sideBranch;
         player->distance_travelled = player->distance_travelled + 1;
+        NewStatus(player);
     } else if (path->mainRoad) {
         printf("There is no path in that direction. You will have to go ahead.\n");
     } else {
@@ -240,6 +261,8 @@ void GetPlayerName(char *name)
 {
     printf("Tell me, what is your name?\n");
     fgets(name, 35, stdin);
+    char *n;
+    n = strtok(name, ' ');
 }
 
 Player *constructPlayer(PathSegment *path)
@@ -249,6 +272,7 @@ Player *constructPlayer(PathSegment *path)
     GetPlayerName(name);
 
     player->name = name;
+    printf("Your name is %s? Okay.", player->name);
 
     player->currentLocation = path;
     player->distance_travelled = 0;
@@ -303,17 +327,16 @@ void handleResponse(char input[], Player *player)
     Direction direction = parseInput(input);
 
     PlayerMove(player, direction);
-
 }
 
 void printVictory()
 {
-    printf("YOU HAVE WON!!!!");
+    printf("YOU HAVE WON!!!!\n");
 }
 
 void printGameOver()
 {
-    printf("GAME OVER!!");
+    printf("GAME OVER!!\n");
 }
 
 bool GameStatus(Player *player)
@@ -321,7 +344,7 @@ bool GameStatus(Player *player)
     if (player->wealth == 100) {
         printVictory();
         return true;
-    } else if (player->health) {
+    } else if (player->health == 0) {
         printGameOver();
         return true;
     }
@@ -350,11 +373,11 @@ int main(int argc, const char * argv[]) {
         printf("input was %s\n", input);
 
         if (GameStatus(player)) {
-            break;
+            playing = false;
         }
     }
 
-    FreeAllPathSegments(path);
+    //FreeAllPathSegments(path);
 
     return 0;
 }
