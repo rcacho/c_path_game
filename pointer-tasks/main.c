@@ -184,6 +184,7 @@ void MoveForward(Player *player)
     
     if (path->mainRoad) {
         player->currentLocation = path->mainRoad;
+        player->distance_travelled = player->distance_travelled + 1;
     } else if (path->sideBranch) {
         printf("There is no path ahead. You will have to turn.\n");
     } else {
@@ -197,6 +198,7 @@ void MoveTurn(Player *player)
     
     if (path->sideBranch) {
         player->currentLocation = path->sideBranch;
+        player->distance_travelled = player->distance_travelled + 1;
     } else if (path->mainRoad) {
         printf("There is no path in that direction. You will have to go ahead.\n");
     } else {
@@ -216,6 +218,32 @@ void PlayerMove(Player *player, Direction direction)
     }
 }
 
+Player *constructPlayer(PathSegment *path)
+{
+    Player *player = malloc(sizeof(Player));
+
+    player->currentLocation = path;
+    player->distance_travelled = 0;
+    player->wealth = 0;
+    player->health = 100;
+
+    return player;
+}
+
+Direction parseInput(char input[])
+{
+    if (ForwardPhrase(input)) {
+        return Forward;
+    } else if (TurnPhrase(input)
+}
+
+void handleResponse(char input[], Player *player)
+{
+    Direction direction = parseInput(input);
+    
+    PlayerMove(player, direction);
+    
+}
 
 int main(int argc, const char * argv[]) {
     
@@ -226,12 +254,16 @@ int main(int argc, const char * argv[]) {
     
     char input[300];
     
+    Player *player = constructPlayer(path);
+
     while (playing) {
         // init player
-        
+        PlayerStatus(player);
+
         fgets(input, 300, stdin);
         strtok(input, "\n"); // trim newline at end of input
-        
+        handleResponse(input, player);
+
         printf("input was %s\n", input);
     }
     
