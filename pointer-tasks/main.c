@@ -227,6 +227,7 @@ int main(int argc, const char * argv[]) {
     char input[300];
     
     while (playing) {
+        // init player
         
         fgets(input, 300, stdin);
         strtok(input, "\n"); // trim newline at end of input
