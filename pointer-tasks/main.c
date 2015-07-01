@@ -21,6 +21,7 @@ typedef struct PathSegment {
 } PathSegment;
 
 typedef struct Player {
+    char *name[];
     int health;
     int wealth;
     int distance_travelled;
@@ -51,26 +52,26 @@ PathSegmentContents RandomContents() {
 
 PathSegment *GenerateAdventure() {
     srand((int)time(NULL));
-    
+
     PathSegment *home = CreatePathSegment(PathSegmentContentsNone);
-    
+
     PathSegment *leftBranchCursor = home; // primary
     PathSegment *rightBranchCursor = NULL;
-    
+
     for (int i = 0; i < 100; i++) {
-        
+
         if (leftBranchCursor != NULL) {
             // append to left branch
             leftBranchCursor->mainRoad = CreatePathSegment(RandomContents());
             leftBranchCursor = leftBranchCursor->mainRoad;
         }
-        
+
         if (rightBranchCursor != NULL) {
             // append to right branch
             rightBranchCursor->sideBranch = CreatePathSegment(RandomContents());
             rightBranchCursor = rightBranchCursor->sideBranch;
         }
-        
+
         if (leftBranchCursor && rightBranchCursor) {
             // if we're branched right now, maybe merge.
             if (rand() % 10 < 3) {
@@ -84,20 +85,20 @@ PathSegment *GenerateAdventure() {
             }
         }
     }
-    
+
     return home;
 }
 
 void PrintPathSegments(PathSegment *main, PathSegment *side) {
     if (!main) return;
-    
+
     if (main->mainRoad && main->sideBranch) {
         printf("|\\");
     } else {
         if (main->mainRoad) {
             printf("|");
         }
-        
+
         if (side) {
             if (side->sideBranch) {
                 printf(" |");
@@ -109,16 +110,16 @@ void PrintPathSegments(PathSegment *main, PathSegment *side) {
 }
 
 void PrintPath(PathSegment *pathStart) {
-    
+
     PathSegment *mainPath = pathStart->mainRoad;
     PathSegment *sidePath = pathStart->sideBranch;
-    
+
     while (mainPath->mainRoad != NULL) {
         PrintPathSegments(mainPath, sidePath);
-        
+
         printf("\n");
         mainPath = mainPath->mainRoad;
-        
+
         if (mainPath->sideBranch) {
             sidePath = mainPath->sideBranch;
         } else if (sidePath) {
@@ -127,6 +128,12 @@ void PrintPath(PathSegment *pathStart) {
     }
 }
 
+void Printu(char message[], int parameter, Player *player)
+{
+    printf("%s: ", player->name);
+    printf("%s", message)
+
+}
 void FreePathHelper(PathSegment *segment);
 
 void FreeAllPathSegments(PathSegment *segment) {
@@ -179,7 +186,7 @@ void PlayerHealth(Player *player)
     } else if (player->health < 20) {
         printf("Your current health is at %d! Be careful!\n", player->health);
     }
-    
+
 }
 void PlayerStatus(Player* player)
 {
@@ -193,7 +200,7 @@ void PlayerStatus(Player* player)
 void MoveForward(Player *player)
 {
     PathSegment *path = player->currentLocation;
-    
+
     if (path->mainRoad) {
         player->currentLocation = path->mainRoad;
         player->distance_travelled = player->distance_travelled + 1;
@@ -207,7 +214,7 @@ void MoveForward(Player *player)
 void MoveTurn(Player *player)
 {
     PathSegment *path = player->currentLocation;
-    
+
     if (path->sideBranch) {
         player->currentLocation = path->sideBranch;
         player->distance_travelled = player->distance_travelled + 1;
@@ -233,6 +240,8 @@ void PlayerMove(Player *player, Direction direction)
 Player *constructPlayer(PathSegment *path)
 {
     Player *player = malloc(sizeof(Player));
+
+    GetPlayerName
 
     player->currentLocation = path;
     player->distance_travelled = 0;
@@ -279,15 +288,15 @@ Direction parseInput(char input[])
     } else {
         return -1;
     }
-    
+
 }
 
 void handleResponse(char input[], Player *player)
 {
     Direction direction = parseInput(input);
-    
+
     PlayerMove(player, direction);
-    
+
 }
 
 void printVictory()
@@ -313,14 +322,14 @@ bool GameStatus(Player *player)
 }
 
 int main(int argc, const char * argv[]) {
-    
+
     PathSegment *path = GenerateAdventure();
     PrintPath(path);
-    
+
     bool playing = true;
-    
+
     char input[300];
-    
+
     Player *player = constructPlayer(path);
 
     while (playing) {
@@ -332,13 +341,13 @@ int main(int argc, const char * argv[]) {
         handleResponse(input, player);
 
         printf("input was %s\n", input);
-        
+
         if (GameStatus(player)) {
             break;
         }
     }
-    
+
     FreeAllPathSegments(path);
-    
+
     return 0;
 }
