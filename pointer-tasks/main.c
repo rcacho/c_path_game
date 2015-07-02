@@ -8,12 +8,19 @@
 #include <string.h>
 #include <time.h>
 
+
 typedef enum PathSegmentContents {
     PathSegmentContentsTreasure = 1,
     PathSegmentContentsMonster = 2,
     PathSegmentContentsNone = 0,
-    PathSegmentContentsGem = 3
+    PathSegmentContentsGem = 3,
+    PathSegmentContentsSpyglass = 4
 } PathSegmentContents;
+
+typedef enum ItemType {
+    Gem,
+    Spyglass
+}
 
 typedef struct PathSegment {
     PathSegmentContents contents;
@@ -21,16 +28,17 @@ typedef struct PathSegment {
     struct PathSegment *sideBranch;
 } PathSegment;
 
-typedef struct Gem {
+typedef struct Item {
    int health;
-} Gem;
+} Item;
 
 typedef struct Player {
     char *name;
     int health;
     int wealth;
     int distance_travelled;
-    Gem *gem;
+    Item *gem;
+    Item *spyglass;
     PathSegment *currentLocation;
 } Player;
 
@@ -41,16 +49,100 @@ typedef enum Direction {
 
 #pragma mark - Game Path Creation
 
-Gem* constructGem()
+Item* constructItem()
 {
-    Gem *gem = malloc(sizeof(Gem));
-    gem->health = 10;
-    return gem;
+    Item *item = malloc(sizeof(Item));
+    item->health = 10;
+    return item;
 }
 
-void GemStatus(Gem *gem)
+void GemStatus(Item *gem)
 {
     gem->health = gem->health - 1;
+    if (gem->health == 0) {
+        printf(" \nThe gem appears to have shattered!\n \n");
+    }
+}
+
+void SpyglassStatus(Item *spyglass)
+{
+    spyglass->health = spyglass->health - 2;
+
+    if (spyglass->health == 0) {
+        printf("\nThe spyglass appears to have broken!\n \n");
+    }
+}
+
+bool parseYN() {
+    char response[35];
+    fgets(response, 35, stdin);
+    if (strstr(response, "yes")) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+int InspectAhead(PathSegment *segment, PathSegmentContents contents, int miles)
+{
+    PathSegment *nextsegment;
+    if (segment->mainRoad != NULL) {
+        nextsegment = segment->mainRoad;
+    } else if (segment->sideBranch != NULL) {
+        nextsegment = segment->sideBranch;
+    } else {
+        printf("You think you see the end of your journey!");
+        return 0;
+    }
+
+    if (miles == 0) {
+        return 0;
+    } else if (segment->contents == contents) {
+        return 1 + InspectAhead(nextsegment, contents, miles - 1);
+    } else {
+        return 0 + InspectAhead(nextsegment, contents, miles - 1);
+    }
+}
+
+int InspectForMonstersAhead(PathSegment *segment) {
+    return InspectAhead(segment, PathSegmentContentsMonster, 5);
+}
+
+int InspectForTreasuresAhead(PathSegment *segment) {
+    return InspectAhead(segment, PathSegmentContentsTreasure, 5);
+}
+
+void UseSpyglass(Player *player)
+{
+    PathSegment *path = player->currentLocation;
+    PathSegment *main = path->mainRoad;
+    PathSegment *side = path->sideBranch;
+
+    printf("You can see five miles ahead....\n");
+
+    int monsters_in_main = InspectForMonstersAhead(main);
+    int treasure_in_main = InspectForTreasureAhead(main);
+    int monsters_in_side = InspectForMonstersAhead(side);
+    int treasure_in_side = InspectForTreasuresAhead(side);
+
+
+    printf("In the main road...\n");
+    printf("You see %d monsters!\n You see %d treasures!\n", monsters_in_main, treasure_in_main);
+    printf("In the side road...\n");
+    printf("You see %d monsters!\n You see %d treasures!\n", monsters_in_side, treasure_in_side);
+}
+
+void SpyglassOpportunity(Player *player)
+{
+    printf("\n Hmmm.. This maybe would be a good chance to use the spyglass??\n \n");
+    bool answer = parseYN();
+
+    if (answer) {
+        UseSpyglass(player);
+        SpyglassStatus(player->spyglass);
+    } else {
+        printf("You decided against using the spyglass.\n");
+    }
 }
 
 PathSegment *CreatePathSegment(PathSegmentContents contents) {
@@ -61,20 +153,28 @@ PathSegment *CreatePathSegment(PathSegmentContents contents) {
     return path;
 }
 
-PathSegmentContents RandomContents(Gem *gem) {
+PathSegmentContents RandomContents(Item *gem, Item *spyglass) {
     int roll = rand() % 100;
     // 1 in 100 chance that a location will have the gem
     // if the gem has already been taken by a segment reroll
-    if (roll < 1) {
+    if (roll <= 1) {
       if (gem != NULL) {
           gem = NULL;
           return PathSegmentContentsGem;
       } else {
-          return RandomContents(gem);
+          return RandomContents(gem, spyglass);
       }
     }
-    if (roll < 11) return PathSegmentContentsMonster;
-    if (roll < 31) return PathSegmentContentsTreasure;
+    if (roll > 30 && roll < 36) {
+        if (spyglass != NULL) {
+            spyglass = NULL;
+            return PathSegmentContentsSpyglass;
+        } else {
+            return RandomContents(gem, spyglass);
+        }
+    }
+    if (roll > 10 && roll < 20) return PathSegmentContentsMonster;
+    if (roll > 20 && roll < 30) return PathSegmentContentsTreasure;
     return PathSegmentContentsNone;
 }
 
@@ -82,7 +182,8 @@ PathSegment *GenerateAdventure() {
     srand((int)time(NULL));
 
     PathSegment *home = CreatePathSegment(PathSegmentContentsNone);
-    Gem *gem = constructGem();
+    Item *gem = constructItem();
+    Item *spyglass = constructItem();
 
     PathSegment *leftBranchCursor = home; // primary
     PathSegment *rightBranchCursor = NULL;
@@ -91,13 +192,13 @@ PathSegment *GenerateAdventure() {
 
         if (leftBranchCursor != NULL) {
             // append to left branch
-            leftBranchCursor->mainRoad = CreatePathSegment(RandomContents(gem));
+            leftBranchCursor->mainRoad = CreatePathSegment(RandomContents(gem, spyglass));
             leftBranchCursor = leftBranchCursor->mainRoad;
         }
 
         if (rightBranchCursor != NULL) {
             // append to right branch
-            rightBranchCursor->sideBranch = CreatePathSegment(RandomContents(gem));
+            rightBranchCursor->sideBranch = CreatePathSegment(RandomContents(gem, spyglass));
             rightBranchCursor = rightBranchCursor->sideBranch;
         }
 
@@ -188,6 +289,7 @@ void PlayerOptions(Player *player)
     PathSegment *path = player->currentLocation;
     if (path->mainRoad && path->sideBranch) {
         printf("You are at a crossroads!\n What decision will you make?\n");
+        SpyglassOpportunity(player);
     } else if (path->mainRoad) {
         printf("The only way forward is straight ahead.\n");
     } else if (path->sideBranch) {
@@ -239,9 +341,14 @@ void printGemFound()
     printf("You found a strange glowing gem!\n You think it could be useful...\n");
 }
 
+void printSpyglassFound()
+{
+    printf("You found what appears to be an antique spyglass! Use it to spot danger ahead!");
+}
+
 void PlayerTakesDamage(Player *player)
 {
-    Gem *gem = player->gem;
+    Item *gem = player->gem;
     if (gem == NULL) {
         printDamageTaken();
         player->health = player->health - 5;
@@ -258,7 +365,7 @@ void NewStatus(Player *player)
 {
     PathSegment *location = player->currentLocation;
     PathSegmentContents contents = location->contents;
-    Gem *gem = player->gem;
+    Item *gem = player->gem;
 
     switch (contents) {
         case 1:
@@ -270,7 +377,11 @@ void NewStatus(Player *player)
             break;
         case 3:
             printGemFound();
-            player->gem = constructGem();
+            player->gem = constructItem();
+            break;
+        case 4:
+            printSpyglassFound();
+            player->spyglass = constructItem();
             break;
         default:
             break;
