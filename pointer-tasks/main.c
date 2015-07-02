@@ -20,7 +20,7 @@ typedef enum PathSegmentContents {
 typedef enum ItemType {
     Gem,
     Spyglass
-}
+} ItemType;
 
 typedef struct PathSegment {
     PathSegmentContents contents;
@@ -121,7 +121,7 @@ void UseSpyglass(Player *player)
     printf("You can see five miles ahead....\n");
 
     int monsters_in_main = InspectForMonstersAhead(main);
-    int treasure_in_main = InspectForTreasureAhead(main);
+    int treasure_in_main = InspectForTreasuresAhead(main);
     int monsters_in_side = InspectForMonstersAhead(side);
     int treasure_in_side = InspectForTreasuresAhead(side);
 
@@ -134,14 +134,20 @@ void UseSpyglass(Player *player)
 
 void SpyglassOpportunity(Player *player)
 {
-    printf("\n Hmmm.. This maybe would be a good chance to use the spyglass??\n \n");
-    bool answer = parseYN();
+    Item *spyglass = player->spyglass;
+    if (spyglass != NULL)  {
+        if (spyglass->health != 0) {
+    
+            printf("\n Hmmm.. This maybe would be a good chance to use the spyglass??\n \n");
+            bool answer = parseYN();
 
-    if (answer) {
-        UseSpyglass(player);
-        SpyglassStatus(player->spyglass);
-    } else {
-        printf("You decided against using the spyglass.\n");
+            if (answer) {
+                UseSpyglass(player);
+                SpyglassStatus(player->spyglass);
+            } else {
+                printf("You decided against using the spyglass.\n");
+            }
+        }
     }
 }
 
@@ -314,7 +320,7 @@ void PlayerHealth(Player *player)
     } else if (player->health > 40) {
         printf("Your health is at %d! Start making more cautious decisions.\n", player->health);
     } else if (player->health > 20) {
-        printf("Your health is at %d! Be careful %s!\n", player->name);
+        printf("Your health is at %d! Be careful %s!\n", player->health, player->name);
     } else if (player->health < 20) {
         printf("Your current health is at %d! Your outlook is grim %s!\n", player->health, player->name);
     }
