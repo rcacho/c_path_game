@@ -9,9 +9,10 @@
 #include <time.h>
 
 typedef enum PathSegmentContents {
-    PathSegmentContentsTreasure,
-    PathSegmentContentsMonster,
-    PathSegmentContentsNone,
+    PathSegmentContentsTreasure = 1,
+    PathSegmentContentsMonster = 2,
+    PathSegmentContentsNone = 0,
+    PathSegmentContentsGem = 3
 } PathSegmentContents;
 
 typedef struct PathSegment {
@@ -20,11 +21,16 @@ typedef struct PathSegment {
     struct PathSegment *sideBranch;
 } PathSegment;
 
+typedef struct Gem {
+   int health;
+} Gem;
+
 typedef struct Player {
     char *name;
     int health;
     int wealth;
     int distance_travelled;
+    Gem *gem;
     PathSegment *currentLocation;
 } Player;
 
@@ -35,6 +41,18 @@ typedef enum Direction {
 
 #pragma mark - Game Path Creation
 
+Gem* constructGem()
+{
+    Gem *gem = malloc(sizeof(Gem));
+    gem->health = 10;
+    return gem;
+}
+
+void GemStatus(Gem *gem)
+{
+    gem->health = gem->health - 1;
+}
+
 PathSegment *CreatePathSegment(PathSegmentContents contents) {
     PathSegment *path = malloc(sizeof(PathSegment));
     path->contents = contents;
@@ -43,10 +61,20 @@ PathSegment *CreatePathSegment(PathSegmentContents contents) {
     return path;
 }
 
-PathSegmentContents RandomContents() {
-    int roll = rand() % 10;
-    if (roll == 0) return PathSegmentContentsMonster;
-    if (roll < 3) return PathSegmentContentsTreasure;
+PathSegmentContents RandomContents(Gem *gem) {
+    int roll = rand() % 100;
+    // 1 in 100 chance that a location will have the gem
+    // if the gem has already been taken by a segment reroll
+    if (roll < 1) {
+      if (gem != NULL) {
+          gem = NULL;
+          return PathSegmentContentsGem;
+      } else {
+          return RandomContents(gem);
+      }
+    }
+    if (roll < 11) return PathSegmentContentsMonster;
+    if (roll < 31) return PathSegmentContentsTreasure;
     return PathSegmentContentsNone;
 }
 
@@ -54,6 +82,7 @@ PathSegment *GenerateAdventure() {
     srand((int)time(NULL));
 
     PathSegment *home = CreatePathSegment(PathSegmentContentsNone);
+    Gem *gem = constructGem();
 
     PathSegment *leftBranchCursor = home; // primary
     PathSegment *rightBranchCursor = NULL;
@@ -62,13 +91,13 @@ PathSegment *GenerateAdventure() {
 
         if (leftBranchCursor != NULL) {
             // append to left branch
-            leftBranchCursor->mainRoad = CreatePathSegment(RandomContents());
+            leftBranchCursor->mainRoad = CreatePathSegment(RandomContents(gem));
             leftBranchCursor = leftBranchCursor->mainRoad;
         }
 
         if (rightBranchCursor != NULL) {
             // append to right branch
-            rightBranchCursor->sideBranch = CreatePathSegment(RandomContents());
+            rightBranchCursor->sideBranch = CreatePathSegment(RandomContents(gem));
             rightBranchCursor = rightBranchCursor->sideBranch;
         }
 
@@ -190,21 +219,67 @@ void PlayerHealth(Player *player)
 
 }
 
+void printDamageTaken()
+{
+    printf("A Monster has attacked you!!\n");
+}
+
+void printTreasureFound()
+{
+    printf("You have found some treasure!\n You are closer to completing you goal!\n");
+}
+
+void printGemProtection()
+{
+    printf("Your Gem protected you from a monster attack!\n You escaped unscathed!\n");
+}
+
+void printGemFound()
+{
+    printf("You found a strange glowing gem!\n You think it could be useful...\n");
+}
+
+void PlayerTakesDamage(Player *player)
+{
+    Gem *gem = player->gem;
+    if (gem == NULL) {
+        printDamageTaken();
+        player->health = player->health - 5;
+    } else if (gem->health == 0) {
+        printDamageTaken();
+        player->health = player->health - 5;
+    } else {
+        printGemProtection();
+    }
+
+}
+
 void NewStatus(Player *player)
 {
     PathSegment *location = player->currentLocation;
     PathSegmentContents contents = location->contents;
+    Gem *gem = player->gem;
 
     switch (contents) {
         case 1:
+            printTreasureFound();
             player->wealth = player->wealth + 5;
             break;
         case 2:
-            player->health = player->health - 5;
+            PlayerTakesDamage(player);
+            break;
+        case 3:
+            printGemFound();
+            player->gem = constructGem();
             break;
         default:
             break;
     }
+
+    if (gem != NULL && gem->health != 0) {
+        GemStatus(player->gem);
+    }
+
 }
 
 void PlayerStatus(Player* player)
@@ -262,7 +337,7 @@ void GetPlayerName(char *name)
     printf("Tell me, what is your name?\n");
     fgets(name, 35, stdin);
     char *n;
-    n = strtok(name, ' ');
+    //n = strtok(name, '\n');
 }
 
 Player *constructPlayer(PathSegment *path)
@@ -278,6 +353,7 @@ Player *constructPlayer(PathSegment *path)
     player->distance_travelled = 0;
     player->wealth = 0;
     player->health = 100;
+    player->gem = NULL;
 
     return player;
 }
