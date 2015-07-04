@@ -10,4 +10,23 @@
 
 @interface AdventureLog : NSObject
 
+
+-(void)playerVictory;
+
+-(void)gameOver;
+
+-(void)printDamageTaken;
+
+
+-(void)printTreasureFound;
+
+-(void) printGemProtection;
+
+
+-(void) printGemFound;
+
+-(void) printSpyglassFound;
+
+
+
 @end

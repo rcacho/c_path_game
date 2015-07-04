@@ -327,30 +327,7 @@ void PlayerHealth(Player *player)
 
 }
 
-void printDamageTaken()
-{
-    printf("A Monster has attacked you!!\n");
-}
 
-void printTreasureFound()
-{
-    printf("You have found some treasure!\n You are closer to completing you goal!\n");
-}
-
-void printGemProtection()
-{
-    printf("Your Gem protected you from a monster attack!\n You escaped unscathed!\n");
-}
-
-void printGemFound()
-{
-    printf("You found a strange glowing gem!\n You think it could be useful...\n");
-}
-
-void printSpyglassFound()
-{
-    printf("You found what appears to be an antique spyglass! Use it to spot danger ahead!");
-}
 
 void PlayerTakesDamage(Player *player)
 {
@@ -457,23 +434,7 @@ void GetPlayerName(char *name)
     //n = strtok(name, '\n');
 }
 
-Player *constructPlayer(PathSegment *path)
-{
-    Player *player = malloc(sizeof(Player));
-    char name[35];
-    GetPlayerName(name);
 
-    player->name = name;
-    printf("Your name is %s? Okay.", player->name);
-
-    player->currentLocation = path;
-    player->distance_travelled = 0;
-    player->wealth = 0;
-    player->health = 100;
-    player->gem = NULL;
-
-    return player;
-}
 
 bool ForwardPhrase(char input[])
 {
@@ -522,27 +483,7 @@ void handleResponse(char input[], Player *player)
     PlayerMove(player, direction);
 }
 
-void printVictory()
-{
-    printf("YOU HAVE WON!!!!\n");
-}
 
-void printGameOver()
-{
-    printf("GAME OVER!!\n");
-}
-
-bool GameStatus(Player *player)
-{
-    if (player->wealth == 100) {
-        printVictory();
-        return true;
-    } else if (player->health == 0) {
-        printGameOver();
-        return true;
-    }
-    return false;
-}
 
 int main(int argc, const char * argv[]) {
 

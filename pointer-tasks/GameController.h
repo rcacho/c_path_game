@@ -10,6 +10,7 @@
 #import "AdventureGenerator.h"
 #import "Player.h"
 #import "InputHandler.h"
+#import "AdventureLog.h"
 
 @interface GameController : NSObject
 
@@ -18,6 +19,8 @@
 @property Player *player;
 
 @property InputHandler *inputHandler;
+
+@property AdventureLog *log;
 
 @property BOOL gameRunning;
 

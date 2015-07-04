@@ -10,4 +10,13 @@
 
 @implementation Player
 
+-(instancetype)createPlayer {
+    [self init];
+    
+    [self getName];
+
+    
+    return self;
+}
+
 @end

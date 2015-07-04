@@ -42,7 +42,14 @@
 
 -(void)gameStatus {
     
-    [self setGameRunning:NO];
+    if ([self.player isDead]) {
+        [self.log gameOver];
+        [self setGameRunning:NO];
+    } else if ([self.player hasWon]) {
+        [self.log playerVictory];
+        [self setGameRunning:NO]
+    }
+
 }
 
 @end

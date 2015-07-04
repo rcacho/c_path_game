@@ -7,12 +7,28 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PathSegment.h"
+#import "PathSegmentEquipableItem.h"
 
 @interface Player : NSObject
+
+@property NSString *name;
+
+@property PathSegment *currentLocation;
+
+@property NSInteger health;
+
+@property NSInteger wealth;
+
+// array of PathSegmentEquipableItems
+@property NSArray* inventory;
+
 
 
 -(instancetype)createPlayer;
 
 -(void)getStatus;
+
+-(void)getName;
 
 @end
