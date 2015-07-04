@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3CA3BF081B47CA4600FAE3F4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3BF071B47CA4600FAE3F4 /* main.m */; };
+		3CA3BF0B1B47CB0000FAE3F4 /* PathSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3BF0A1B47CB0000FAE3F4 /* PathSegment.m */; };
+		3CA3BF0E1B47CB6B00FAE3F4 /* PathSegmentContents.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3BF0D1B47CB6B00FAE3F4 /* PathSegmentContents.m */; };
+		3CA3BF111B47CBB800FAE3F4 /* PathSegmentTreasure.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3BF101B47CBB800FAE3F4 /* PathSegmentTreasure.m */; };
+		3CA3BF141B47CBCD00FAE3F4 /* PathSegmentMonster.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3BF131B47CBCD00FAE3F4 /* PathSegmentMonster.m */; };
+		3CA3BF171B47CC5500FAE3F4 /* PathSegmentEquipableItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3BF161B47CC5500FAE3F4 /* PathSegmentEquipableItem.m */; };
+		3CA3BF1A1B47CC8E00FAE3F4 /* EquipableItemGem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3BF191B47CC8E00FAE3F4 /* EquipableItemGem.m */; };
+		3CA3BF1D1B47CCB300FAE3F4 /* EquipableItemSpyglass.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3BF1C1B47CCB300FAE3F4 /* EquipableItemSpyglass.m */; };
+		3CA3BF201B47CD1200FAE3F4 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3BF1F1B47CD1200FAE3F4 /* Player.m */; };
+		3CA3BF231B47CDF400FAE3F4 /* AdventureGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3BF221B47CDF400FAE3F4 /* AdventureGenerator.m */; };
+		3CA3BF261B47CE5E00FAE3F4 /* GameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3BF251B47CE5E00FAE3F4 /* GameController.m */; };
+		3CA3BF291B47D11800FAE3F4 /* AdventureLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3BF281B47D11800FAE3F4 /* AdventureLog.m */; };
+		3CA3BF2C1B47D58A00FAE3F4 /* InputHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA3BF2B1B47D58A00FAE3F4 /* InputHandler.m */; };
 		C9EA0C8D1B44505D003DE644 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = C9EA0C8C1B44505D003DE644 /* main.c */; };
 /* End PBXBuildFile section */
 
@@ -23,7 +36,32 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		C9EA0C891B44505D003DE644 /* pointer-tasks */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "pointer-tasks"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CA3BF071B47CA4600FAE3F4 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3CA3BF091B47CB0000FAE3F4 /* PathSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathSegment.h; sourceTree = "<group>"; };
+		3CA3BF0A1B47CB0000FAE3F4 /* PathSegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathSegment.m; sourceTree = "<group>"; };
+		3CA3BF0C1B47CB6B00FAE3F4 /* PathSegmentContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathSegmentContents.h; sourceTree = "<group>"; };
+		3CA3BF0D1B47CB6B00FAE3F4 /* PathSegmentContents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathSegmentContents.m; sourceTree = "<group>"; };
+		3CA3BF0F1B47CBB800FAE3F4 /* PathSegmentTreasure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathSegmentTreasure.h; sourceTree = "<group>"; };
+		3CA3BF101B47CBB800FAE3F4 /* PathSegmentTreasure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathSegmentTreasure.m; sourceTree = "<group>"; };
+		3CA3BF121B47CBCD00FAE3F4 /* PathSegmentMonster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathSegmentMonster.h; sourceTree = "<group>"; };
+		3CA3BF131B47CBCD00FAE3F4 /* PathSegmentMonster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathSegmentMonster.m; sourceTree = "<group>"; };
+		3CA3BF151B47CC5500FAE3F4 /* PathSegmentEquipableItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathSegmentEquipableItem.h; sourceTree = "<group>"; };
+		3CA3BF161B47CC5500FAE3F4 /* PathSegmentEquipableItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathSegmentEquipableItem.m; sourceTree = "<group>"; };
+		3CA3BF181B47CC8E00FAE3F4 /* EquipableItemGem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EquipableItemGem.h; sourceTree = "<group>"; };
+		3CA3BF191B47CC8E00FAE3F4 /* EquipableItemGem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EquipableItemGem.m; sourceTree = "<group>"; };
+		3CA3BF1B1B47CCB300FAE3F4 /* EquipableItemSpyglass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EquipableItemSpyglass.h; sourceTree = "<group>"; };
+		3CA3BF1C1B47CCB300FAE3F4 /* EquipableItemSpyglass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EquipableItemSpyglass.m; sourceTree = "<group>"; };
+		3CA3BF1E1B47CD1200FAE3F4 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		3CA3BF1F1B47CD1200FAE3F4 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
+		3CA3BF211B47CDF400FAE3F4 /* AdventureGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdventureGenerator.h; sourceTree = "<group>"; };
+		3CA3BF221B47CDF400FAE3F4 /* AdventureGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdventureGenerator.m; sourceTree = "<group>"; };
+		3CA3BF241B47CE5E00FAE3F4 /* GameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameController.h; sourceTree = "<group>"; };
+		3CA3BF251B47CE5E00FAE3F4 /* GameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameController.m; sourceTree = "<group>"; };
+		3CA3BF271B47D11800FAE3F4 /* AdventureLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdventureLog.h; sourceTree = "<group>"; };
+		3CA3BF281B47D11800FAE3F4 /* AdventureLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdventureLog.m; sourceTree = "<group>"; };
+		3CA3BF2A1B47D58A00FAE3F4 /* InputHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputHandler.h; sourceTree = "<group>"; };
+		3CA3BF2B1B47D58A00FAE3F4 /* InputHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputHandler.m; sourceTree = "<group>"; };
+		C9EA0C891B44505D003DE644 /* adventure-game */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "adventure-game"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9EA0C8C1B44505D003DE644 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -49,7 +87,7 @@
 		C9EA0C8A1B44505D003DE644 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C9EA0C891B44505D003DE644 /* pointer-tasks */,
+				C9EA0C891B44505D003DE644 /* adventure-game */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -58,6 +96,31 @@
 			isa = PBXGroup;
 			children = (
 				C9EA0C8C1B44505D003DE644 /* main.c */,
+				3CA3BF071B47CA4600FAE3F4 /* main.m */,
+				3CA3BF241B47CE5E00FAE3F4 /* GameController.h */,
+				3CA3BF251B47CE5E00FAE3F4 /* GameController.m */,
+				3CA3BF2A1B47D58A00FAE3F4 /* InputHandler.h */,
+				3CA3BF2B1B47D58A00FAE3F4 /* InputHandler.m */,
+				3CA3BF211B47CDF400FAE3F4 /* AdventureGenerator.h */,
+				3CA3BF221B47CDF400FAE3F4 /* AdventureGenerator.m */,
+				3CA3BF271B47D11800FAE3F4 /* AdventureLog.h */,
+				3CA3BF281B47D11800FAE3F4 /* AdventureLog.m */,
+				3CA3BF1E1B47CD1200FAE3F4 /* Player.h */,
+				3CA3BF1F1B47CD1200FAE3F4 /* Player.m */,
+				3CA3BF091B47CB0000FAE3F4 /* PathSegment.h */,
+				3CA3BF0A1B47CB0000FAE3F4 /* PathSegment.m */,
+				3CA3BF0C1B47CB6B00FAE3F4 /* PathSegmentContents.h */,
+				3CA3BF0D1B47CB6B00FAE3F4 /* PathSegmentContents.m */,
+				3CA3BF0F1B47CBB800FAE3F4 /* PathSegmentTreasure.h */,
+				3CA3BF101B47CBB800FAE3F4 /* PathSegmentTreasure.m */,
+				3CA3BF121B47CBCD00FAE3F4 /* PathSegmentMonster.h */,
+				3CA3BF131B47CBCD00FAE3F4 /* PathSegmentMonster.m */,
+				3CA3BF151B47CC5500FAE3F4 /* PathSegmentEquipableItem.h */,
+				3CA3BF161B47CC5500FAE3F4 /* PathSegmentEquipableItem.m */,
+				3CA3BF181B47CC8E00FAE3F4 /* EquipableItemGem.h */,
+				3CA3BF191B47CC8E00FAE3F4 /* EquipableItemGem.m */,
+				3CA3BF1B1B47CCB300FAE3F4 /* EquipableItemSpyglass.h */,
+				3CA3BF1C1B47CCB300FAE3F4 /* EquipableItemSpyglass.m */,
 			);
 			path = "pointer-tasks";
 			sourceTree = "<group>";
@@ -79,7 +142,7 @@
 			);
 			name = "pointer-tasks";
 			productName = "pointer-tasks";
-			productReference = C9EA0C891B44505D003DE644 /* pointer-tasks */;
+			productReference = C9EA0C891B44505D003DE644 /* adventure-game */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -118,6 +181,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CA3BF081B47CA4600FAE3F4 /* main.m in Sources */,
+				3CA3BF0B1B47CB0000FAE3F4 /* PathSegment.m in Sources */,
+				3CA3BF111B47CBB800FAE3F4 /* PathSegmentTreasure.m in Sources */,
+				3CA3BF141B47CBCD00FAE3F4 /* PathSegmentMonster.m in Sources */,
+				3CA3BF201B47CD1200FAE3F4 /* Player.m in Sources */,
+				3CA3BF171B47CC5500FAE3F4 /* PathSegmentEquipableItem.m in Sources */,
+				3CA3BF1D1B47CCB300FAE3F4 /* EquipableItemSpyglass.m in Sources */,
+				3CA3BF2C1B47D58A00FAE3F4 /* InputHandler.m in Sources */,
+				3CA3BF1A1B47CC8E00FAE3F4 /* EquipableItemGem.m in Sources */,
+				3CA3BF291B47D11800FAE3F4 /* AdventureLog.m in Sources */,
+				3CA3BF231B47CDF400FAE3F4 /* AdventureGenerator.m in Sources */,
+				3CA3BF261B47CE5E00FAE3F4 /* GameController.m in Sources */,
+				3CA3BF0E1B47CB6B00FAE3F4 /* PathSegmentContents.m in Sources */,
 				C9EA0C8D1B44505D003DE644 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -205,14 +281,14 @@
 		C9EA0C911B44505D003DE644 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "adventure-game";
 			};
 			name = Debug;
 		};
 		C9EA0C921B44505D003DE644 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "adventure-game";
 			};
 			name = Release;
 		};
@@ -235,6 +311,7 @@
 				C9EA0C921B44505D003DE644 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
