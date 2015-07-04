@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>9E1493A6-D7FD-40FB-BF68-0768B3C1E143</string>
+	<key>IDESourceControlProjectName</key>
+	<string>pointer-tasks</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>1A8C4711AAD9A24989E676E448C6732892AA77AE</key>
+		<string>https://github.com/rcacho/c_path_game.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>pointer-tasks.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>1A8C4711AAD9A24989E676E448C6732892AA77AE</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/rcacho/c_path_game.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>1A8C4711AAD9A24989E676E448C6732892AA77AE</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1A8C4711AAD9A24989E676E448C6732892AA77AE</string>
+			<key>IDESourceControlWCCName</key>
+			<string>c_path_game</string>
+		</dict>
+	</array>
+</dict>
+</plist>
